@@ -1,0 +1,86 @@
+[
+  {
+    "slug": "engineering-mathematics",
+    "name": "Engineering Mathematics",
+    "shortName": "Math",
+    "description": "Linear algebra, calculus, differential equations, complex variables, probability and numerical methods — the mathematical backbone of every EEE subject.",
+    "gateWeightPercent": 13
+  },
+  {
+    "slug": "electric-circuits",
+    "name": "Electric Circuits",
+    "shortName": "Circuits",
+    "description": "Network theorems, transient and steady-state analysis, two-port networks, and sinusoidal steady-state.",
+    "gateWeightPercent": 8
+  },
+  {
+    "slug": "electromagnetic-fields",
+    "name": "Electromagnetic Fields",
+    "shortName": "EMF",
+    "description": "Coulomb's law, Gauss's law, Laplace/Poisson equations, magnetostatics and Maxwell's equations.",
+    "gateWeightPercent": 5
+  },
+  {
+    "slug": "signals-and-systems",
+    "name": "Signals and Systems",
+    "shortName": "S&S",
+    "description": "Continuous and discrete signals, LTI systems, Fourier/Laplace/Z transforms, sampling theorem.",
+    "gateWeightPercent": 8
+  },
+  {
+    "slug": "electrical-machines",
+    "name": "Electrical Machines",
+    "shortName": "Machines",
+    "description": "Single and three-phase transformers, DC machines, induction and synchronous machines.",
+    "gateWeightPercent": 10
+  },
+  {
+    "slug": "power-systems",
+    "name": "Power Systems",
+    "shortName": "Power",
+    "description": "Generation, transmission, distribution, load flow, fault analysis, protection, stability and economics.",
+    "gateWeightPercent": 11
+  },
+  {
+    "slug": "control-systems",
+    "name": "Control Systems",
+    "shortName": "Control",
+    "description": "Transfer functions, stability, root locus, Bode/Nyquist, state-space, compensators.",
+    "gateWeightPercent": 9
+  },
+  {
+    "slug": "electrical-measurements",
+    "name": "Electrical and Electronic Measurements",
+    "shortName": "Measurements",
+    "description": "Bridges, potentiometers, PMMC, instrument transformers, digital voltmeters, oscilloscopes.",
+    "gateWeightPercent": 5
+  },
+  {
+    "slug": "analog-electronics",
+    "name": "Analog Electronics",
+    "shortName": "Analog",
+    "description": "Diodes, BJTs, MOSFETs, amplifiers, feedback, op-amp circuits, oscillators.",
+    "gateWeightPercent": 8
+  },
+  {
+    "slug": "digital-electronics",
+    "name": "Digital Electronics",
+    "shortName": "Digital",
+    "description": "Boolean algebra, combinational and sequential logic, ADC/DAC, microprocessors.",
+    "gateWeightPercent": 8
+  },
+  {
+    "slug": "power-electronics",
+    "name": "Power Electronics",
+    "shortName": "PE",
+    "description": "Semiconductor devices, rectifiers, choppers, inverters, drives.",
+    "gateWeightPercent": 7
+  },
+  {
+    "slug": "general-aptitude",
+    "name": "General Aptitude",
+    "shortName": "GA",
+    "description": "Verbal and numerical aptitude common to every GATE paper.",
+    "gateWeightPercent": 15
+  }
+]

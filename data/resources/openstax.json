@@ -1,0 +1,48 @@
+[
+  {
+    "id": "openstax-university-physics-vol-2",
+    "title": "University Physics Volume 2 — Electricity and Magnetism",
+    "description": "Free peer-reviewed textbook covering electrostatics, circuits, magnetism and electromagnetic waves.",
+    "sourceId": "openstax",
+    "url": "https://openstax.org/details/books/university-physics-volume-2",
+    "subjects": ["electromagnetic-fields", "electric-circuits"],
+    "media": ["textbook", "problem-set"],
+    "level": "ug",
+    "authors": ["Samuel J. Ling", "Jeff Sanny", "William Moebs"],
+    "institution": "OpenStax, Rice University",
+    "license": "CC-BY-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "gateTopics": ["Electrostatics", "Magnetostatics", "Maxwell's Equations"],
+    "tags": ["textbook"]
+  },
+  {
+    "id": "openstax-calculus-volume-1",
+    "title": "Calculus Volume 1",
+    "description": "Limits, differentiation and integration with worked examples and exercises.",
+    "sourceId": "openstax",
+    "url": "https://openstax.org/details/books/calculus-volume-1",
+    "subjects": ["engineering-mathematics"],
+    "media": ["textbook", "problem-set"],
+    "level": "ug",
+    "institution": "OpenStax, Rice University",
+    "license": "CC-BY-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "gateTopics": ["Calculus"],
+    "tags": ["textbook"]
+  },
+  {
+    "id": "openstax-introductory-statistics",
+    "title": "Introductory Statistics",
+    "description": "Probability distributions, hypothesis testing and regression — useful for GATE probability topics.",
+    "sourceId": "openstax",
+    "url": "https://openstax.org/details/books/introductory-statistics",
+    "subjects": ["engineering-mathematics"],
+    "media": ["textbook"],
+    "level": "ug",
+    "institution": "OpenStax, Rice University",
+    "license": "CC-BY-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "gateTopics": ["Probability", "Statistics"],
+    "tags": ["textbook"]
+  }
+]

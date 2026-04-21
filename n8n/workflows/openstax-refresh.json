@@ -1,0 +1,62 @@
+{
+  "name": "jnana-setu · OpenStax catalog refresh",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 22 * * 6" }
+          ]
+        }
+      },
+      "id": "schedule",
+      "name": "Weekly Sunday 03:30 IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://openstax.org/apps/cms/api/v2/pages/?type=books.Book&fields=title,slug,license_name,license_url,cover_url&limit=200",
+        "responseFormat": "json"
+      },
+      "id": "fetch",
+      "name": "Fetch OpenStax book index",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "const books = $json.items ?? [];\nconst allowedLicenses = new Set(['CC-BY-4.0', 'CC-BY-SA-4.0']);\nreturn books\n  .filter((b) => b.license_name && allowedLicenses.has(b.license_name.replace(/\\s/g, '-')))\n  .map((b) => ({\n    json: {\n      id: `openstax-${b.slug}`,\n      title: b.title,\n      description: `OpenStax open textbook: ${b.title}`,\n      sourceId: 'openstax',\n      url: `https://openstax.org/details/books/${b.slug}`,\n      subjects: [],\n      media: ['textbook'],\n      level: 'ug',\n      institution: 'OpenStax, Rice University',\n      license: b.license_name.replace(/\\s/g, '-'),\n      licenseUrl: b.license_url ?? 'https://creativecommons.org/licenses/by/4.0/',\n      gateTopics: [],\n      tags: ['textbook']\n    }\n  }));"
+      },
+      "id": "normalize",
+      "name": "Normalise and filter by license",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "owner": "ganeshgowri-asa",
+        "repository": "jnana-setu",
+        "title": "data: refresh OpenStax catalog ({{$now.format('yyyy-MM-dd')}})",
+        "body": "Automated refresh from OpenStax book API. Only books released under CC BY 4.0 or CC BY-SA 4.0 are included. A maintainer must still eyeball each entry's license page.",
+        "branch": "chore/openstax-refresh-{{$now.format('yyyyMMdd')}}"
+      },
+      "id": "open-pr",
+      "name": "Open PR against main",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "schedule": { "main": [[{ "node": "fetch", "type": "main", "index": 0 }]] },
+    "fetch": { "main": [[{ "node": "normalize", "type": "main", "index": 0 }]] },
+    "normalize": { "main": [[{ "node": "open-pr", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["jnana-setu", "openstax", "catalog-refresh"]
+}

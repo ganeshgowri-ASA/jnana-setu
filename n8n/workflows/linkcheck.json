@@ -1,0 +1,90 @@
+{
+  "name": "jnana-setu · link health check",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 20 * * 0" }
+          ]
+        }
+      },
+      "id": "schedule",
+      "name": "Weekly Sunday 01:30 IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/ganeshgowri-asa/jnana-setu/main/public/catalog-index.json",
+        "responseFormat": "json"
+      },
+      "id": "fetch-catalog",
+      "name": "Fetch built catalog index",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 5,
+        "options": {}
+      },
+      "id": "split",
+      "name": "Split into batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{$json.url}}",
+        "method": "HEAD",
+        "options": {
+          "timeout": 15000,
+          "redirect": { "redirect": { "followRedirects": true } }
+        }
+      },
+      "id": "head",
+      "name": "HEAD request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "return items.filter((i) => {\n  const status = i.json.statusCode ?? i.json.status ?? 0;\n  return status >= 400;\n});"
+      },
+      "id": "filter-broken",
+      "name": "Keep only broken links",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "owner": "ganeshgowri-asa",
+        "repository": "jnana-setu",
+        "title": "Broken links detected: {{$now.format('yyyy-MM-dd')}}",
+        "body": "The weekly link-health workflow found resources that no longer respond with a 2xx/3xx status. Review and either re-verify the URL or remove the entry.",
+        "labels": ["catalog", "needs-review"]
+      },
+      "id": "open-issue",
+      "name": "Open issue with broken links",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "schedule": { "main": [[{ "node": "fetch-catalog", "type": "main", "index": 0 }]] },
+    "fetch-catalog": { "main": [[{ "node": "split", "type": "main", "index": 0 }]] },
+    "split": { "main": [[{ "node": "head", "type": "main", "index": 0 }]] },
+    "head": { "main": [[{ "node": "filter-broken", "type": "main", "index": 0 }]] },
+    "filter-broken": { "main": [[{ "node": "open-issue", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["jnana-setu", "linkcheck"]
+}

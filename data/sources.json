@@ -1,0 +1,74 @@
+[
+  {
+    "id": "nptel",
+    "name": "NPTEL",
+    "homepage": "https://nptel.ac.in/",
+    "publisher": "MHRD / IITs & IISc, Government of India",
+    "defaultLicense": "CC-BY-SA-4.0",
+    "notes": "NPTEL lectures and course materials are released under Creative Commons BY-SA 4.0 unless otherwise noted on the individual course page."
+  },
+  {
+    "id": "mit-ocw",
+    "name": "MIT OpenCourseWare",
+    "homepage": "https://ocw.mit.edu/",
+    "publisher": "Massachusetts Institute of Technology",
+    "defaultLicense": "CC-BY-NC-SA-4.0",
+    "notes": "Most OCW materials are released under CC BY-NC-SA 4.0. A handful of courses use different terms — verify per course before redistribution."
+  },
+  {
+    "id": "openstax",
+    "name": "OpenStax",
+    "homepage": "https://openstax.org/",
+    "publisher": "Rice University",
+    "defaultLicense": "CC-BY-4.0",
+    "notes": "OpenStax textbooks are peer-reviewed, openly licensed under CC BY 4.0."
+  },
+  {
+    "id": "libretexts",
+    "name": "LibreTexts",
+    "homepage": "https://libretexts.org/",
+    "publisher": "LibreTexts Consortium (UC Davis)",
+    "defaultLicense": "CC-BY-NC-SA-4.0",
+    "notes": "License varies per book; most are CC BY-NC-SA 4.0. Always check the footer of the specific chapter."
+  },
+  {
+    "id": "gate-iit",
+    "name": "Official GATE Papers (IIT)",
+    "homepage": "https://gate.iitk.ac.in/",
+    "publisher": "IIT organising institute (GOAPS)",
+    "defaultLicense": "Official-Free-Access",
+    "notes": "Previous-year GATE question papers and official answer keys are released for free by the organising IIT. Only link to the official host; do not mirror."
+  },
+  {
+    "id": "arxiv",
+    "name": "arXiv",
+    "homepage": "https://arxiv.org/",
+    "publisher": "Cornell University",
+    "defaultLicense": "CC-BY-4.0",
+    "notes": "License varies per submission (CC0, CC BY, CC BY-SA, CC BY-NC-SA, or arXiv perpetual). Verify the license tag on each paper."
+  },
+  {
+    "id": "nasa-ntrs",
+    "name": "NASA Technical Reports Server",
+    "homepage": "https://ntrs.nasa.gov/",
+    "publisher": "U.S. National Aeronautics and Space Administration",
+    "defaultLicense": "Public-Domain",
+    "notes": "U.S. Federal government works are in the public domain in the United States."
+  },
+  {
+    "id": "iitkgp-ndl",
+    "name": "National Digital Library of India",
+    "homepage": "https://ndl.iitkgp.ac.in/",
+    "publisher": "Ministry of Education / IIT Kharagpur",
+    "defaultLicense": "Official-Free-Access",
+    "notes": "Aggregates openly-licensed and publicly-funded content. Each item carries its own license — surface the specific license when linking."
+  },
+  {
+    "id": "shodhganga",
+    "name": "Shodhganga @ INFLIBNET",
+    "homepage": "https://shodhganga.inflibnet.ac.in/",
+    "publisher": "INFLIBNET Centre, UGC",
+    "defaultLicense": "Official-Free-Access",
+    "notes": "Indian PhD theses released by the awarding university on open access terms."
+  }
+]

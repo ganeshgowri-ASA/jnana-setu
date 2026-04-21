@@ -1,0 +1,67 @@
+{
+  "name": "jnana-setu · NPTEL catalog refresh",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 21 * * 6" }
+          ]
+        }
+      },
+      "id": "schedule",
+      "name": "Weekly Sunday 03:00 IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://nptel.ac.in/api/courses?discipline=Electrical%20Engineering",
+        "responseFormat": "json",
+        "options": {
+          "headers": {
+            "User-Agent": "jnana-setu/0.1 (+https://github.com/ganeshgowri-asa/jnana-setu) metadata-only"
+          }
+        }
+      },
+      "id": "fetch",
+      "name": "Fetch NPTEL EE course index",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "const rows = $json.courses ?? [];\nreturn rows.map((c) => ({\n  json: {\n    id: `nptel-${c.course_id}`,\n    title: c.course_name,\n    description: c.abstract ?? c.course_name,\n    sourceId: 'nptel',\n    url: `https://nptel.ac.in/courses/${c.course_id}`,\n    subjects: [],\n    media: ['video-lectures'],\n    level: 'gate',\n    authors: c.instructors ?? [],\n    institution: c.institute ?? '',\n    license: 'CC-BY-SA-4.0',\n    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',\n    gateTopics: [],\n    tags: ['video']\n  }\n}));"
+      },
+      "id": "normalize",
+      "name": "Normalise to catalog schema",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "owner": "ganeshgowri-asa",
+        "repository": "jnana-setu",
+        "title": "data: refresh NPTEL catalog ({{$now.format('yyyy-MM-dd')}})",
+        "body": "Automated refresh from NPTEL course index. A maintainer must verify each entry's license still appears on the course page before merging.\n\nAny entry whose license cannot be verified must be removed before merge.",
+        "branch": "chore/nptel-refresh-{{$now.format('yyyyMMdd')}}"
+      },
+      "id": "open-pr",
+      "name": "Open PR against main",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "schedule": { "main": [[{ "node": "fetch", "type": "main", "index": 0 }]] },
+    "fetch": { "main": [[{ "node": "normalize", "type": "main", "index": 0 }]] },
+    "normalize": { "main": [[{ "node": "open-pr", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["jnana-setu", "nptel", "catalog-refresh"]
+}
