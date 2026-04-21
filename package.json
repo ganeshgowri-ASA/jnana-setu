@@ -14,8 +14,9 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "validate:catalog": "tsx scripts/validate.ts",
+    "quality:check": "tsx scripts/quality_check.ts",
     "build:index": "tsx scripts/build-index.ts",
-    "check": "npm run typecheck && npm run lint && npm run validate:catalog"
+    "check": "npm run typecheck && npm run lint && npm run validate:catalog && npm run quality:check"
   },
   "dependencies": {
     "fuse.js": "^7.0.0",

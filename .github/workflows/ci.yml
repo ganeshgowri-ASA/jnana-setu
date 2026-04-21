@@ -21,6 +21,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run validate:catalog
+      - run: npm run quality:check
       - run: npm run build
 
   scrapers:
