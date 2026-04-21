@@ -1,7 +1,9 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -13,9 +15,18 @@ const config: Config = {
         sans: ["ui-sans-serif", "system-ui", "sans-serif"],
         devanagari: ["Noto Sans Devanagari", "system-ui", "sans-serif"],
       },
+      keyframes: {
+        shimmer: {
+          "0%": { backgroundPosition: "-400px 0" },
+          "100%": { backgroundPosition: "400px 0" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 1.4s linear infinite",
+      },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 export default config;

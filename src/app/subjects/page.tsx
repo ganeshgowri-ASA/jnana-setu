@@ -12,11 +12,11 @@ export default async function SubjectsIndexPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-3xl font-bold text-ink">All subjects</h1>
-      <p className="mt-2 text-slate-600">
+      <h1 className="text-3xl font-bold text-slate-50">All subjects</h1>
+      <p className="mt-2 text-slate-300">
         Electrical Engineering topics, weighted to the GATE EE syllabus.
       </p>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {catalog.subjects.map((subject) => (
           <SubjectTile
             key={subject.slug}

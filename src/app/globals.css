@@ -3,14 +3,33 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
 body {
-  @apply bg-parchment text-ink antialiased;
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
+
+html.light,
+html.light body {
+  @apply bg-parchment text-ink;
 }
 
 a {
   text-decoration: none;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(148, 163, 184, 0.18) 0%,
+    rgba(148, 163, 184, 0.34) 50%,
+    rgba(148, 163, 184, 0.18) 100%
+  );
+  background-size: 400px 100%;
 }

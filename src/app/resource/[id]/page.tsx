@@ -30,29 +30,33 @@ export default async function ResourcePage({ params }: { params: { id: string } 
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-10">
-      <p className="text-sm text-slate-500">
+      <p className="text-xs uppercase tracking-widest text-slate-500">
         {source?.name ?? resource.sourceId}
         {resource.institution ? ` · ${resource.institution}` : ""}
       </p>
-      <h1 className="mt-1 text-3xl font-bold text-ink">{resource.title}</h1>
+      <h1 className="mt-2 text-3xl font-bold text-slate-50">{resource.title}</h1>
       {resource.authors.length > 0 ? (
-        <p className="mt-2 text-slate-700">by {resource.authors.join(", ")}</p>
+        <p className="mt-2 text-slate-300">by {resource.authors.join(", ")}</p>
       ) : null}
 
-      <div className="mt-4 flex flex-wrap gap-2 text-xs uppercase tracking-wide text-slate-500">
-        <span className="rounded bg-parchment px-2 py-0.5 text-ink">{resource.level}</span>
+      <div className="mt-4 flex flex-wrap gap-2 text-xs uppercase tracking-wide text-slate-400">
+        <span className="rounded-full bg-saffron/15 px-2 py-0.5 text-saffron">
+          {resource.level}
+        </span>
         {resource.media.map((m) => (
-          <span key={m} className="rounded bg-slate-100 px-2 py-0.5">{m}</span>
+          <span key={m} className="rounded-full bg-slate-800 px-2 py-0.5">{m}</span>
         ))}
         {resource.year ? (
-          <span className="rounded bg-slate-100 px-2 py-0.5">{resource.year}</span>
+          <span className="rounded-full bg-slate-800 px-2 py-0.5">{resource.year}</span>
         ) : null}
       </div>
 
-      <p className="mt-6 text-base text-slate-800">{resource.description}</p>
+      <p className="mt-6 text-base leading-relaxed text-slate-200">
+        {resource.description}
+      </p>
 
-      <div className="mt-6 rounded-lg border border-slate-200 bg-white p-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+      <div className="mt-6 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
           License
         </h2>
         <p className="mt-1">
@@ -66,11 +70,11 @@ export default async function ResourcePage({ params }: { params: { id: string } 
               {licenseLabel(resource.license)}
             </a>
           ) : (
-            <span>{licenseLabel(resource.license)}</span>
+            <span className="text-slate-200">{licenseLabel(resource.license)}</span>
           )}
         </p>
         {source?.notes ? (
-          <p className="mt-2 text-sm text-slate-600">{source.notes}</p>
+          <p className="mt-2 text-sm text-slate-400">{source.notes}</p>
         ) : null}
       </div>
 
@@ -79,25 +83,25 @@ export default async function ResourcePage({ params }: { params: { id: string } 
           href={resource.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center rounded-lg bg-saffron px-5 py-3 font-semibold text-white hover:bg-amber-600"
+          className="inline-flex items-center rounded-lg bg-saffron px-5 py-3 font-semibold text-slate-950 hover:bg-amber-500"
         >
-          Open resource ↗
+          Open source →
         </a>
       </div>
 
       {resource.subjects.length > 0 ? (
         <section className="mt-10">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
             Subjects
           </h2>
-          <ul className="mt-2 flex flex-wrap gap-2">
+          <ul className="mt-3 flex flex-wrap gap-2">
             {resource.subjects.map((slug) => {
               const s = subjectMap.get(slug);
               return (
                 <li key={slug}>
                   <Link
                     href={`/subjects/${slug}`}
-                    className="rounded-full border border-slate-300 px-3 py-1 text-sm text-slate-700 hover:border-saffron hover:text-saffron"
+                    className="rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-300 hover:border-saffron hover:text-saffron"
                   >
                     {s?.name ?? slug}
                   </Link>
@@ -110,10 +114,10 @@ export default async function ResourcePage({ params }: { params: { id: string } 
 
       {resource.gateTopics.length > 0 ? (
         <section className="mt-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
             GATE topics covered
           </h2>
-          <ul className="mt-2 list-inside list-disc text-slate-700">
+          <ul className="mt-3 list-inside list-disc text-slate-300">
             {resource.gateTopics.map((t) => (
               <li key={t}>{t}</li>
             ))}
