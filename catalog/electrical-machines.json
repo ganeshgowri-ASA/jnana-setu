@@ -1,0 +1,18 @@
+[
+  {
+    "id": "nptel-electrical-machines-1",
+    "title": "Electrical Machines - I",
+    "description": "Transformers and DC machines with emphasis on equivalent circuits and performance testing.",
+    "sourceId": "nptel",
+    "url": "https://nptel.ac.in/courses/108105155",
+    "subjects": ["electrical-machines"],
+    "media": ["video-lectures", "lecture-notes"],
+    "level": "gate",
+    "authors": ["Prof. Tapas Kumar Bhattacharya"],
+    "institution": "IIT Kharagpur",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "gateTopics": ["Transformers", "DC Machines"],
+    "tags": ["video"]
+  }
+]

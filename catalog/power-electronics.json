@@ -1,0 +1,18 @@
+[
+  {
+    "id": "nptel-power-electronics",
+    "title": "Power Electronics",
+    "description": "Characteristics of semiconductor devices, rectifiers, choppers, inverters and motor drives.",
+    "sourceId": "nptel",
+    "url": "https://nptel.ac.in/courses/108101038",
+    "subjects": ["power-electronics"],
+    "media": ["video-lectures"],
+    "level": "gate",
+    "authors": ["Prof. B. G. Fernandes"],
+    "institution": "IIT Bombay",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "gateTopics": ["Rectifiers", "Choppers", "Inverters"],
+    "tags": ["video"]
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "name": "jnana-setu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ज्ञानसेतु — Bridge of Knowledge. Open-access catalog and searchable web app for EEE / GATE study material, indexing only legally-free resources.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "validate:catalog": "tsx scripts/validate.ts",
+    "quality:check": "tsx scripts/quality_check.ts",
+    "build:index": "tsx scripts/build-index.ts",
+    "check": "npm run typecheck && npm run lint && npm run validate:catalog && npm run quality:check"
+  },
+  "dependencies": {
+    "fuse.js": "^7.0.0",
+    "js-yaml": "^4.1.0",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "@tailwindcss/typography": "^0.5.13",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}

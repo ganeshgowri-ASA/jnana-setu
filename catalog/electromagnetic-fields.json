@@ -1,0 +1,34 @@
+[
+  {
+    "id": "nptel-electromagnetic-fields",
+    "title": "Electromagnetic Fields",
+    "description": "Electrostatics, magnetostatics, time-varying fields and Maxwell's equations with solved examples.",
+    "sourceId": "nptel",
+    "url": "https://nptel.ac.in/courses/108106073",
+    "subjects": ["electromagnetic-fields"],
+    "media": ["video-lectures", "problem-set"],
+    "level": "gate",
+    "authors": ["Prof. Harishankar Ramachandran"],
+    "institution": "IIT Madras",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "gateTopics": ["Coulomb's Law", "Gauss's Law", "Maxwell's Equations"],
+    "tags": ["video"]
+  },
+  {
+    "id": "openstax-university-physics-vol-2",
+    "title": "University Physics Volume 2 — Electricity and Magnetism",
+    "description": "Free peer-reviewed textbook covering electrostatics, circuits, magnetism and electromagnetic waves.",
+    "sourceId": "openstax",
+    "url": "https://openstax.org/details/books/university-physics-volume-2",
+    "subjects": ["electromagnetic-fields", "electric-circuits"],
+    "media": ["textbook", "problem-set"],
+    "level": "ug",
+    "authors": ["Samuel J. Ling", "Jeff Sanny", "William Moebs"],
+    "institution": "OpenStax, Rice University",
+    "license": "CC-BY-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "gateTopics": ["Electrostatics", "Magnetostatics", "Maxwell's Equations"],
+    "tags": ["textbook"]
+  }
+]
