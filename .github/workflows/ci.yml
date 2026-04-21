@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  check:
+  web:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,3 +22,17 @@ jobs:
       - run: npm run lint
       - run: npm run validate:catalog
       - run: npm run build
+
+  scrapers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r scrapers/requirements.txt
+      - name: smoke import
+        run: python -c "import scrapers.orchestrator, scrapers.nptel, scrapers.mit_ocw, scrapers.openstax, scrapers.libretexts, scrapers.gate_papers"
+      - name: compile all
+        run: python -m compileall -q scrapers
