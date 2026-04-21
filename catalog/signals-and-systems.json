@@ -1,0 +1,35 @@
+[
+  {
+    "id": "nptel-signals-and-systems",
+    "title": "Signals and Systems",
+    "description": "Continuous-time and discrete-time signals, LTI systems, Fourier/Laplace/Z-transforms and sampling theorem.",
+    "sourceId": "nptel",
+    "url": "https://nptel.ac.in/courses/117104074",
+    "subjects": ["signals-and-systems"],
+    "media": ["video-lectures", "lecture-notes"],
+    "level": "gate",
+    "authors": ["Prof. K. S. Venkatesh"],
+    "institution": "IIT Kanpur",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "gateTopics": ["Fourier Transform", "Laplace Transform", "Z-Transform", "Sampling"],
+    "tags": ["video"]
+  },
+  {
+    "id": "mit-6-003-signals-and-systems",
+    "title": "6.003 Signals and Systems",
+    "description": "Mathematical descriptions of signals and systems, time-frequency analysis, modulation and sampling.",
+    "sourceId": "mit-ocw",
+    "url": "https://ocw.mit.edu/courses/6-003-signals-and-systems-fall-2011/",
+    "subjects": ["signals-and-systems"],
+    "media": ["video-lectures", "problem-set"],
+    "level": "ug",
+    "authors": ["Dennis Freeman"],
+    "institution": "MIT",
+    "year": 2011,
+    "license": "CC-BY-NC-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "gateTopics": ["Fourier Analysis", "LTI Systems"],
+    "tags": ["video"]
+  }
+]

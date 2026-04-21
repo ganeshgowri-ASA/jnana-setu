@@ -1,21 +1,25 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
+import yaml from "js-yaml";
+
 import {
   ResourceSchema,
-  SourceSchema,
+  SourcesYamlSchema,
   SubjectSchema,
   type Resource,
   type Source,
+  type SourcesYaml,
   type Subject,
 } from "@data/schema";
 
-const DATA_ROOT = path.join(process.cwd(), "data");
-const RESOURCES_DIR = path.join(DATA_ROOT, "resources");
+const ROOT = process.cwd();
+const DATA_ROOT = path.join(ROOT, "data");
+const CATALOG_ROOT = path.join(ROOT, "catalog");
+const SOURCES_YAML = path.join(ROOT, "sources.yaml");
 
 async function readJson<T>(filePath: string): Promise<T> {
-  const raw = await fs.readFile(filePath, "utf8");
-  return JSON.parse(raw) as T;
+  return JSON.parse(await fs.readFile(filePath, "utf8")) as T;
 }
 
 export async function loadSubjects(): Promise<Subject[]> {
@@ -23,33 +27,39 @@ export async function loadSubjects(): Promise<Subject[]> {
   return raw.map((entry) => SubjectSchema.parse(entry));
 }
 
+export async function loadSourcesYaml(): Promise<SourcesYaml> {
+  const raw = await fs.readFile(SOURCES_YAML, "utf8");
+  const parsed = yaml.load(raw);
+  return SourcesYamlSchema.parse(parsed);
+}
+
 export async function loadSources(): Promise<Source[]> {
-  const raw = await readJson<unknown[]>(path.join(DATA_ROOT, "sources.json"));
-  return raw.map((entry) => SourceSchema.parse(entry));
+  return (await loadSourcesYaml()).sources;
 }
 
 export async function loadResources(): Promise<Resource[]> {
-  const entries = await fs.readdir(RESOURCES_DIR);
+  let entries: string[] = [];
+  try {
+    entries = await fs.readdir(CATALOG_ROOT);
+  } catch {
+    return [];
+  }
   const jsonFiles = entries.filter((f) => f.endsWith(".json"));
   const perFile = await Promise.all(
     jsonFiles.map(async (file) => {
-      const raw = await readJson<unknown[]>(path.join(RESOURCES_DIR, file));
+      const raw = await readJson<unknown[]>(path.join(CATALOG_ROOT, file));
       return raw.map((entry) => ResourceSchema.parse(entry));
     }),
   );
-  const all = perFile.flat();
-  assertUniqueIds(all);
-  return all;
+  return dedupeById(perFile.flat());
 }
 
-function assertUniqueIds(resources: Resource[]): void {
-  const seen = new Set<string>();
+function dedupeById(resources: Resource[]): Resource[] {
+  const seen = new Map<string, Resource>();
   for (const r of resources) {
-    if (seen.has(r.id)) {
-      throw new Error(`Duplicate resource id: ${r.id}`);
-    }
-    seen.add(r.id);
+    if (!seen.has(r.id)) seen.set(r.id, r);
   }
+  return Array.from(seen.values());
 }
 
 export interface Catalog {

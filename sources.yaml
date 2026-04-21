@@ -1,0 +1,113 @@
+# jnana-setu source whitelist.
+#
+# Canonical list of approved upstream sources. Both the Python scrapers under
+# /scrapers and the TypeScript quality_check script read this file. Any URL
+# written into catalog/*.json MUST begin with one of the base_urls listed here —
+# the `base.assert_whitelisted()` helper and `scripts/quality_check.ts` both
+# enforce this rule, so a typo here will visibly break CI.
+#
+# Adding a new source requires a PR review against LICENSING.md.
+
+# URL substrings that must never appear in any catalog entry — these sites
+# distribute pirated textbooks / paywalled papers. CI fails if any catalog
+# source_url contains any of these substrings.
+url_blacklist:
+  - libgen
+  - z-lib
+  - annas-archive
+  - sci-hub
+  - pdfdrive
+  - b-ok
+  - 1lib
+
+sources:
+  - id: nptel
+    name: NPTEL
+    publisher: MHRD / IITs & IISc, Government of India
+    homepage: https://nptel.ac.in/
+    base_urls:
+      - https://nptel.ac.in/
+    default_license: CC-BY-SA-4.0
+    api: https://nptel.ac.in/api/courses
+    notes: >-
+      NPTEL lectures and course materials are released under CC BY-SA 4.0
+      unless otherwise noted on the individual course page.
+
+  - id: mit-ocw
+    name: MIT OpenCourseWare
+    publisher: Massachusetts Institute of Technology
+    homepage: https://ocw.mit.edu/
+    base_urls:
+      - https://ocw.mit.edu/
+    default_license: CC-BY-NC-SA-4.0
+    search: https://ocw.mit.edu/search/?d=Electrical%20Engineering%20and%20Computer%20Science
+    notes: >-
+      Most OCW materials are CC BY-NC-SA 4.0. A handful of courses use
+      different terms — scrapers must read the per-course license tag.
+
+  - id: openstax
+    name: OpenStax
+    publisher: Rice University
+    homepage: https://openstax.org/
+    base_urls:
+      - https://openstax.org/
+    default_license: CC-BY-4.0
+    api: https://openstax.org/api/v2/pages?type=books.Book
+    notes: OpenStax textbooks are CC BY 4.0.
+
+  - id: libretexts
+    name: LibreTexts
+    publisher: LibreTexts Consortium (UC Davis)
+    homepage: https://libretexts.org/
+    base_urls:
+      - https://eng.libretexts.org/
+      - https://phys.libretexts.org/
+    default_license: CC-BY-NC-SA-4.0
+    sitemap: https://eng.libretexts.org/sitemap.xml
+    notes: License varies per book; most are CC BY-NC-SA 4.0.
+
+  - id: gate-iit
+    name: Official GATE Papers (IIT)
+    publisher: IIT organising institute (GOAPS)
+    homepage: https://gate.iitk.ac.in/
+    base_urls:
+      - https://gate.iitk.ac.in/
+      - https://gate.iisc.ac.in/
+      - https://gate.iitb.ac.in/
+    default_license: Official-Free-Access
+    notes: >-
+      Previous-year papers and answer keys are released for free by the
+      organising IIT. Link only — never mirror.
+
+  - id: arxiv
+    name: arXiv
+    publisher: Cornell University
+    homepage: https://arxiv.org/
+    base_urls:
+      - https://arxiv.org/
+    default_license: CC-BY-4.0
+    notes: Per-submission license varies — scrapers must read the tag.
+
+  - id: nasa-ntrs
+    name: NASA Technical Reports Server
+    publisher: U.S. National Aeronautics and Space Administration
+    homepage: https://ntrs.nasa.gov/
+    base_urls:
+      - https://ntrs.nasa.gov/
+    default_license: Public-Domain
+
+  - id: iitkgp-ndl
+    name: National Digital Library of India
+    publisher: Ministry of Education / IIT Kharagpur
+    homepage: https://ndl.iitkgp.ac.in/
+    base_urls:
+      - https://ndl.iitkgp.ac.in/
+    default_license: Official-Free-Access
+
+  - id: shodhganga
+    name: Shodhganga @ INFLIBNET
+    publisher: INFLIBNET Centre, UGC
+    homepage: https://shodhganga.inflibnet.ac.in/
+    base_urls:
+      - https://shodhganga.inflibnet.ac.in/
+    default_license: Official-Free-Access

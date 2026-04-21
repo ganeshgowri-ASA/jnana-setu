@@ -27,10 +27,19 @@ export const LevelSchema = z.enum(["ug", "pg", "gate", "mixed"]);
 export const SourceSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string(),
-  homepage: z.string().url(),
   publisher: z.string(),
-  defaultLicense: LicenseSchema,
+  homepage: z.string().url(),
+  base_urls: z.array(z.string().url()).min(1),
+  default_license: LicenseSchema,
+  api: z.string().url().optional(),
+  search: z.string().url().optional(),
+  sitemap: z.string().url().optional(),
   notes: z.string().optional(),
+});
+
+export const SourcesYamlSchema = z.object({
+  url_blacklist: z.array(z.string()).default([]),
+  sources: z.array(SourceSchema).min(1),
 });
 
 export const ResourceSchema = z.object({
@@ -64,5 +73,6 @@ export type License = z.infer<typeof LicenseSchema>;
 export type Media = z.infer<typeof MediaSchema>;
 export type Level = z.infer<typeof LevelSchema>;
 export type Source = z.infer<typeof SourceSchema>;
+export type SourcesYaml = z.infer<typeof SourcesYamlSchema>;
 export type Resource = z.infer<typeof ResourceSchema>;
 export type Subject = z.infer<typeof SubjectSchema>;

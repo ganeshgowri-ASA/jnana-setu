@@ -2,17 +2,21 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
+import yaml from "js-yaml";
+
 import {
   ResourceSchema,
-  SourceSchema,
+  SourcesYamlSchema,
   SubjectSchema,
   type Resource,
-  type Source,
+  type SourcesYaml,
   type Subject,
 } from "../data/schema.js";
 
-const DATA_ROOT = path.join(process.cwd(), "data");
-const RESOURCES_DIR = path.join(DATA_ROOT, "resources");
+const ROOT = process.cwd();
+const DATA_ROOT = path.join(ROOT, "data");
+const CATALOG_ROOT = path.join(ROOT, "catalog");
+const SOURCES_YAML = path.join(ROOT, "sources.yaml");
 
 async function readJson<T>(p: string): Promise<T> {
   return JSON.parse(await fs.readFile(p, "utf8")) as T;
@@ -37,41 +41,56 @@ async function main(): Promise<void> {
   }
   const subjectSlugs = new Set(subjects.map((s) => s.slug));
 
-  const sourcesRaw = await readJson<unknown[]>(path.join(DATA_ROOT, "sources.json"));
-  const sources: Source[] = [];
-  for (const [i, entry] of sourcesRaw.entries()) {
-    const parsed = SourceSchema.safeParse(entry);
-    if (!parsed.success) {
-      fail(`sources.json[${i}]: ${parsed.error.message}`);
-      continue;
-    }
-    sources.push(parsed.data);
+  const yamlRaw = await fs.readFile(SOURCES_YAML, "utf8");
+  const parsedYaml = SourcesYamlSchema.safeParse(yaml.load(yamlRaw));
+  let sources: SourcesYaml["sources"] = [];
+  if (!parsedYaml.success) {
+    fail(`sources.yaml: ${parsedYaml.error.message}`);
+  } else {
+    sources = parsedYaml.data.sources;
   }
   const sourceIds = new Set(sources.map((s) => s.id));
 
-  const files = (await fs.readdir(RESOURCES_DIR)).filter((f) => f.endsWith(".json"));
+  let catalogFiles: string[] = [];
+  try {
+    catalogFiles = (await fs.readdir(CATALOG_ROOT)).filter((f) => f.endsWith(".json"));
+  } catch {
+    fail(`catalog/ directory is missing`);
+  }
+
   const seenIds = new Set<string>();
   const resources: Resource[] = [];
 
-  for (const file of files) {
-    const raw = await readJson<unknown[]>(path.join(RESOURCES_DIR, file));
+  for (const file of catalogFiles) {
+    const subjectSlug = path.basename(file, ".json");
+    if (!subjectSlugs.has(subjectSlug)) {
+      fail(`catalog/${file}: filename does not match any subject slug`);
+    }
+    const raw = await readJson<unknown[]>(path.join(CATALOG_ROOT, file));
     for (const [i, entry] of raw.entries()) {
       const parsed = ResourceSchema.safeParse(entry);
       if (!parsed.success) {
-        fail(`resources/${file}[${i}]: ${parsed.error.message}`);
+        fail(`catalog/${file}[${i}]: ${parsed.error.message}`);
         continue;
       }
       const r = parsed.data;
-      if (seenIds.has(r.id)) fail(`resources/${file}[${i}]: duplicate id ${r.id}`);
+      if (seenIds.has(r.id)) {
+        fail(`catalog/${file}[${i}]: duplicate id ${r.id}`);
+      }
       seenIds.add(r.id);
 
       if (!sourceIds.has(r.sourceId)) {
-        fail(`resources/${file}[${i}] (${r.id}): unknown sourceId ${r.sourceId}`);
+        fail(`catalog/${file}[${i}] (${r.id}): unknown sourceId ${r.sourceId}`);
       }
       for (const s of r.subjects) {
         if (!subjectSlugs.has(s)) {
-          fail(`resources/${file}[${i}] (${r.id}): unknown subject slug ${s}`);
+          fail(`catalog/${file}[${i}] (${r.id}): unknown subject slug ${s}`);
         }
+      }
+      if (!r.subjects.includes(subjectSlug)) {
+        fail(
+          `catalog/${file}[${i}] (${r.id}): filed under ${subjectSlug}.json but entry.subjects does not include ${subjectSlug}`,
+        );
       }
       resources.push(r);
     }

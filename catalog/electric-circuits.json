@@ -1,0 +1,56 @@
+[
+  {
+    "id": "nptel-basic-electric-circuits",
+    "title": "Basic Electric Circuits",
+    "description": "Full NPTEL video course covering network theorems, transient analysis, two-port networks and AC steady-state. Aligned to GATE EE circuit analysis.",
+    "sourceId": "nptel",
+    "url": "https://nptel.ac.in/courses/108102181",
+    "subjects": ["electric-circuits"],
+    "media": ["video-lectures", "lecture-notes"],
+    "level": "gate",
+    "authors": ["Prof. Nagendra Krishnapura"],
+    "institution": "IIT Madras",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "gateTopics": ["Network Theorems", "Transient Analysis", "Two-port Networks"],
+    "tags": ["video", "hindi-subtitles"]
+  },
+  {
+    "id": "mit-6-002-circuits-and-electronics",
+    "title": "6.002 Circuits and Electronics",
+    "description": "MIT's introductory circuits and electronics course — lecture videos, notes, problem sets and exams with solutions.",
+    "sourceId": "mit-ocw",
+    "url": "https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/",
+    "subjects": ["electric-circuits", "analog-electronics"],
+    "media": ["video-lectures", "problem-set", "lecture-notes"],
+    "level": "ug",
+    "authors": ["Anant Agarwal"],
+    "institution": "MIT",
+    "year": 2007,
+    "license": "CC-BY-NC-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "gateTopics": ["Network Analysis", "Amplifiers"],
+    "tags": ["video", "problem-sets"]
+  },
+  {
+    "id": "libretexts-electrical-engineering",
+    "title": "Electrical Engineering (LibreTexts Bookshelves)",
+    "description": "Open textbook collection spanning circuits, electronics, signals, communications and machines.",
+    "sourceId": "libretexts",
+    "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering",
+    "subjects": [
+      "electric-circuits",
+      "analog-electronics",
+      "digital-electronics",
+      "signals-and-systems",
+      "electrical-machines"
+    ],
+    "media": ["textbook", "reference"],
+    "level": "ug",
+    "institution": "LibreTexts Consortium",
+    "license": "CC-BY-NC-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "gateTopics": [],
+    "tags": ["textbook"]
+  }
+]

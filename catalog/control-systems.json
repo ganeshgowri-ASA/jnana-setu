@@ -1,0 +1,34 @@
+[
+  {
+    "id": "nptel-control-systems",
+    "title": "Control Engineering",
+    "description": "Transfer functions, root locus, frequency response and state-space methods.",
+    "sourceId": "nptel",
+    "url": "https://nptel.ac.in/courses/108106098",
+    "subjects": ["control-systems"],
+    "media": ["video-lectures", "problem-set"],
+    "level": "gate",
+    "authors": ["Prof. S. D. Agashe"],
+    "institution": "IIT Bombay",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "gateTopics": ["Root Locus", "Bode Plot", "State Space"],
+    "tags": ["video"]
+  },
+  {
+    "id": "mit-6-302-feedback-systems",
+    "title": "6.302 Feedback Systems",
+    "description": "Classical feedback control — stability, root locus, compensator design.",
+    "sourceId": "mit-ocw",
+    "url": "https://ocw.mit.edu/courses/6-302-feedback-systems-spring-2007/",
+    "subjects": ["control-systems"],
+    "media": ["lecture-notes", "problem-set"],
+    "level": "ug",
+    "institution": "MIT",
+    "year": 2007,
+    "license": "CC-BY-NC-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "gateTopics": ["Root Locus", "Compensator Design"],
+    "tags": []
+  }
+]

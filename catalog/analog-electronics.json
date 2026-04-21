@@ -1,0 +1,18 @@
+[
+  {
+    "id": "libretexts-fiore-semiconductor-devices",
+    "title": "Semiconductor Devices — Theory and Application (Fiore)",
+    "description": "Open textbook on diodes, BJTs, FETs and their small-signal models.",
+    "sourceId": "libretexts",
+    "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/Semiconductor_Devices_-_Theory_and_Application_(Fiore)",
+    "subjects": ["analog-electronics"],
+    "media": ["textbook"],
+    "level": "ug",
+    "authors": ["James M. Fiore"],
+    "institution": "Mohawk Valley Community College",
+    "license": "CC-BY-NC-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "gateTopics": ["Diodes", "BJT", "MOSFET"],
+    "tags": ["textbook"]
+  }
+]

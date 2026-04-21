@@ -1,0 +1,35 @@
+[
+  {
+    "id": "nptel-power-systems-analysis",
+    "title": "Power System Analysis",
+    "description": "Load flow, symmetrical components, fault analysis and stability — matches the GATE EE power-systems syllabus.",
+    "sourceId": "nptel",
+    "url": "https://nptel.ac.in/courses/108101004",
+    "subjects": ["power-systems"],
+    "media": ["video-lectures", "lecture-notes"],
+    "level": "gate",
+    "authors": ["Prof. A. K. Sinha"],
+    "institution": "IIT Kharagpur",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "gateTopics": ["Load Flow", "Fault Analysis", "Power System Stability"],
+    "tags": ["video"]
+  },
+  {
+    "id": "mit-6-061-electric-machines",
+    "title": "6.061 Introduction to Electric Power Systems",
+    "description": "Power-system fundamentals — three-phase circuits, machines, transmission and economics.",
+    "sourceId": "mit-ocw",
+    "url": "https://ocw.mit.edu/courses/6-061-introduction-to-electric-power-systems-spring-2011/",
+    "subjects": ["power-systems", "electrical-machines"],
+    "media": ["lecture-notes", "problem-set"],
+    "level": "ug",
+    "authors": ["James Kirtley"],
+    "institution": "MIT",
+    "year": 2011,
+    "license": "CC-BY-NC-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "gateTopics": ["Three-phase Circuits", "Transmission Lines"],
+    "tags": []
+  }
+]
