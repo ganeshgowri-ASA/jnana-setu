@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { loadConfig } from "./config.js";
 import { logger } from "./util/logger.js";
 import { RedisEventBus } from "./bus/redis.js";
