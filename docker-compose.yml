@@ -1,0 +1,37 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - redis-data:/data
+
+  bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: "3000"
+      REDIS_URL: redis://redis:6379
+      RFX_BASE_URL: ${RFX_BASE_URL:-https://rfxmanager.ril.com}
+      RFX_API_TOKEN: ${RFX_API_TOKEN:-}
+      RFX_WEBHOOK_SECRET: ${RFX_WEBHOOK_SECRET:-dev-rfx-secret}
+      QM_BASE_URL: ${QM_BASE_URL:-https://pncplatform.ril.com/queryManager}
+      QM_API_TOKEN: ${QM_API_TOKEN:-}
+      QM_WEBHOOK_SECRET: ${QM_WEBHOOK_SECRET:-dev-qm-secret}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    depends_on:
+      redis:
+        condition: service_healthy
+
+volumes:
+  redis-data:

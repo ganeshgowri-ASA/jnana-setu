@@ -1,0 +1,272 @@
+openapi: 3.1.0
+info:
+  title: Procurement Bridge
+  version: 0.1.0
+  summary: Bridge service between RIL RFX Manager and Query Manager
+  description: |
+    The Procurement Bridge exposes webhook ingress endpoints for the two upstream
+    portals and bridges Query threads bidirectionally. Internal SDK schemas are
+    documented under `components/schemas` and reflect the Zod definitions used
+    by the runtime.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3000
+    description: Local dev
+  - url: https://bridge.example.com
+    description: Production
+tags:
+  - name: webhooks
+  - name: ops
+
+paths:
+  /healthz:
+    get:
+      tags: [ops]
+      summary: Liveness probe
+      operationId: getHealthz
+      responses:
+        "200":
+          description: Service process is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { const: ok }
+                required: [status]
+
+  /readyz:
+    get:
+      tags: [ops]
+      summary: Readiness probe
+      operationId: getReadyz
+      responses:
+        "200":
+          description: Service is ready to receive traffic
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { const: ready }
+                required: [status]
+
+  /webhooks/rfx:
+    post:
+      tags: [webhooks]
+      summary: Ingress for RFX Manager events
+      operationId: postRfxWebhook
+      parameters:
+        - in: header
+          name: X-Rfx-Signature
+          required: true
+          schema: { type: string }
+          description: HMAC-SHA256 of the raw request body using the shared secret, hex-encoded.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RfxWebhookEvent" }
+      responses:
+        "202":
+          description: Event accepted and forwarded to the bridge stream
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accepted: { type: boolean }
+                  id: { type: string }
+                required: [accepted, id]
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /webhooks/qm:
+    post:
+      tags: [webhooks]
+      summary: Ingress for Query Manager events
+      operationId: postQmWebhook
+      parameters:
+        - in: header
+          name: X-Qm-Signature
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/QmWebhookEvent" }
+      responses:
+        "202":
+          description: Event accepted and forwarded to the bridge stream
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accepted: { type: boolean }
+                  id: { type: string }
+                required: [accepted, id]
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+components:
+  responses:
+    BadRequest:
+      description: Malformed payload
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Unauthorized:
+      description: Signature verification failed
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
+        details: { type: object, additionalProperties: true }
+
+    Vendor:
+      type: object
+      required: [id, name, status]
+      properties:
+        id: { type: string }
+        code: { type: string }
+        name: { type: string }
+        email: { type: string, format: email }
+        contactPerson: { type: string }
+        status: { type: string, enum: [active, inactive, blacklisted] }
+
+    RfqLineItem:
+      type: object
+      required: [id, description, quantity, uom]
+      properties:
+        id: { type: string }
+        materialCode: { type: string }
+        description: { type: string }
+        quantity: { type: number, minimum: 0 }
+        uom: { type: string }
+        targetPrice: { type: number, minimum: 0 }
+
+    Rfq:
+      type: object
+      required: [id, rfqNumber, title, status, buyerOrgId, createdAt, updatedAt]
+      properties:
+        id: { type: string }
+        rfqNumber: { type: string }
+        title: { type: string }
+        description: { type: string }
+        status:
+          type: string
+          enum: [draft, published, in_review, awarded, cancelled, closed]
+        buyerOrgId: { type: string }
+        invitedVendorIds:
+          type: array
+          items: { type: string }
+        lineItems:
+          type: array
+          items: { $ref: "#/components/schemas/RfqLineItem" }
+        publishedAt: { type: string, format: date-time }
+        closingAt: { type: string, format: date-time }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    OfferLine:
+      type: object
+      required: [lineItemId, unitPrice, currency]
+      properties:
+        lineItemId: { type: string }
+        unitPrice: { type: number, minimum: 0 }
+        currency: { type: string, minLength: 3, maxLength: 3 }
+        leadTimeDays: { type: integer, minimum: 0 }
+        remarks: { type: string }
+
+    OfferVersion:
+      type: object
+      required: [id, rfqId, vendorId, version, totalValue, currency, submittedAt, status]
+      properties:
+        id: { type: string }
+        rfqId: { type: string }
+        vendorId: { type: string }
+        version: { type: integer, minimum: 1 }
+        totalValue: { type: number, minimum: 0 }
+        currency: { type: string }
+        lines:
+          type: array
+          items: { $ref: "#/components/schemas/OfferLine" }
+        submittedAt: { type: string, format: date-time }
+        status: { type: string, enum: [submitted, withdrawn, superseded] }
+
+    QueryMessage:
+      type: object
+      required: [id, authorId, authorRole, body, createdAt]
+      properties:
+        id: { type: string }
+        authorId: { type: string }
+        authorRole: { type: string, enum: [buyer, vendor, system] }
+        body: { type: string }
+        attachments:
+          type: array
+          items:
+            type: object
+            required: [id, filename, url]
+            properties:
+              id: { type: string }
+              filename: { type: string }
+              url: { type: string, format: uri }
+        createdAt: { type: string, format: date-time }
+
+    Query:
+      type: object
+      required: [id, rfqId, subject, status, origin, createdAt, updatedAt]
+      properties:
+        id: { type: string }
+        rfqId: { type: string }
+        vendorId: { type: string }
+        subject: { type: string }
+        status: { type: string, enum: [open, answered, closed] }
+        origin: { type: string, enum: [rfx, query_manager] }
+        externalId: { type: string }
+        messages:
+          type: array
+          items: { $ref: "#/components/schemas/QueryMessage" }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+
+    RfxWebhookEvent:
+      type: object
+      required: [eventId, type, occurredAt, data]
+      properties:
+        eventId: { type: string }
+        type:
+          type: string
+          enum:
+            - rfq.published
+            - rfq.updated
+            - query.created
+            - query.message_added
+            - query.status_changed
+            - offer.submitted
+        occurredAt: { type: string, format: date-time }
+        data: { type: object, additionalProperties: true }
+
+    QmWebhookEvent:
+      type: object
+      required: [eventId, type, occurredAt, data]
+      properties:
+        eventId: { type: string }
+        type:
+          type: string
+          enum:
+            - thread.created
+            - thread.updated
+            - thread.message_added
+            - thread.status_changed
+        occurredAt: { type: string, format: date-time }
+        data: { type: object, additionalProperties: true }

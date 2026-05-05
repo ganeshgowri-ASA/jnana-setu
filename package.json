@@ -1,0 +1,82 @@
+{
+  "name": "@anahatasri/procurement-bridge",
+  "version": "0.1.0",
+  "description": "Bridge service between RIL RFX Manager and Query Manager — typed SDK, sync agent, webhooks, OpenAPI 3.1.",
+  "license": "MIT",
+  "author": "Anahatasri",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganeshgowri-ASA/jnana-setu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ganeshgowri-ASA/jnana-setu/issues"
+  },
+  "homepage": "https://github.com/ganeshgowri-ASA/jnana-setu#readme",
+  "keywords": [
+    "ril",
+    "rfx",
+    "procurement",
+    "query-manager",
+    "integration",
+    "openapi",
+    "redis-streams"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "procurement-bridge": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js"
+    },
+    "./bus": {
+      "types": "./dist/bus/events.d.ts",
+      "import": "./dist/bus/events.js"
+    },
+    "./openapi": "./docs/openapi.yaml"
+  },
+  "files": [
+    "dist",
+    "docs/openapi.yaml",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run lint && npm test && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ioredis": "^5.4.1",
+    "pino": "^9.4.0",
+    "pino-http": "^10.3.0",
+    "undici": "^6.19.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.10",
+    "msw": "^2.4.9",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
